@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="سكينة: قرآن، مواقيت صلاة، أذكار، قبلة وأدوات يومية في تطبيق ويب عربي.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="سكينة">
+  <meta property="og:title" content="سكينة | رفيقك الإسلامي اليومي">
+  <meta property="og:description" content="المصحف والتلاوة والمواقيت والأذكار والقبلة في مكان واحد.">
+  <meta property="og:type" content="website">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>سكينة | Sakeena</title>
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5z"/><path d="M4 6.5v13A2.5 2.5 0 0 0 6.5 22H20"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-location" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9zM10 21h4"/></symbol>
+    <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h1M12 11h1M16 11h1M8 15h1M12 15h1M16 15h1M8 19h1M12 19h5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 8A8 8 0 0 1 19 7M17.9 16A8 8 0 0 1 5 17"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 20h16"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></symbol>
+  </svg>
+
+  <div id="app" class="app-shell">
+    <header class="app-header">
+      <div class="brand" aria-label="سكينة">
+        <span class="brand-mark">س</span>
+        <span><strong>سكينة</strong><small>Sakeena</small></span>
+      </div>
+      <div class="header-actions">
+        <span id="networkBadge" class="network-badge">متصل</span>
+        <button id="installButton" class="icon-button hidden" type="button" aria-label="تثبيت التطبيق" title="تثبيت التطبيق">
+          <svg><use href="#i-download"></use></svg>
+        </button>
+        <button id="themeButton" class="icon-button" type="button" aria-label="تبديل المظهر" title="تبديل المظهر">
+          <svg class="theme-icon"><use href="#i-moon"></use></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="mainContent" tabindex="-1">
+      <section id="view-home" class="view active" data-view-panel="home">
+        <div class="hero-card">
+          <div class="hero-orb orb-one"></div>
+          <div class="hero-orb orb-two"></div>
+          <div class="hero-content">
+            <div class="date-line">
+              <span id="gregorianDate">—</span>
+              <span class="dot"></span>
+              <span id="hijriDate">—</span>
+            </div>
+            <p class="eyebrow">الصلاة القادمة</p>
+            <div class="next-prayer-row">
+              <h1 id="nextPrayerName">جاري الحساب</h1>
+              <span id="nextPrayerTime" class="hero-time">--:--</span>
+            </div>
+            <p id="prayerCountdown" class="countdown">--:--:--</p>
+            <button id="homeLocationButton" class="soft-button light" type="button">
+              <svg><use href="#i-location"></use></svg>
+              <span id="locationLabel">بيروت، لبنان</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div><p class="eyebrow teal">ابدأ الآن</p><h2>الوصول السريع</h2></div>
+        </div>
+        <div class="quick-grid">
+          <button class="quick-card coral" data-go="quran" type="button">
+            <span class="quick-icon"><svg><use href="#i-book"></use></svg></span>
+            <strong>المصحف</strong><small id="lastPageLabel">آخر قراءة: ١</small>
+          </button>
+          <button class="quick-card aqua" data-go="prayers" type="button">
+            <span class="quick-icon"><svg><use href="#i-clock"></use></svg></span>
+            <strong>المواقيت</strong><small>حسب موقعك</small>
+          </button>
+          <button class="quick-card sand" data-go="adhkar" type="button">
+            <span class="quick-icon"><svg><use href="#i-spark"></use></svg></span>
+            <strong>الأذكار</strong><small>الصباح والمساء</small>
+          </button>
+          <button class="quick-card mint" data-tool="tasbih" type="button">
+            <span class="quick-icon"><svg><use href="#i-refresh"></use></svg></span>
+            <strong>التسبيح</strong><small id="tasbihMiniCount">٠ تسبيحة</small>
+          </button>
+        </div>
+
+        <article class="verse-card">
+          <div class="verse-card-head">
+            <span class="mini-badge">آية اليوم</span>
+            <span id="dailyVerseRef">سورة الرعد · ٢٨</span>
+          </div>
+          <blockquote id="dailyVerseText">أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ</blockquote>
+          <p>خذ دقيقة هادئة، اقرأها بتمهّل، ثم ابدأ يومك.</p>
+        </article>
+      </section>
+
+      <section id="view-quran" class="view" data-view-panel="quran">
+        <div class="page-intro compact">
+          <div><p class="eyebrow teal">القرآن الكريم</p><h1>المصحف</h1></div>
+          <button id="bookmarkPageButton" class="icon-button elevated" type="button" aria-label="حفظ الصفحة">
+            <svg><use href="#i-bookmark"></use></svg>
+          </button>
+        </div>
+
+        <div class="quran-toolbar card">
+          <label class="field compact-field"><span>الصفحة</span><input id="pageInput" type="number" inputmode="numeric" min="1" max="604" value="1"></label>
+          <button id="goToPageButton" class="primary-button small" type="button">انتقال</button>
+          <button id="resumePageButton" class="soft-button" type="button">آخر قراءة</button>
+        </div>
+
+        <div id="mushafCard" class="mushaf-card" aria-live="polite">
+          <div class="mushaf-header">
+            <span id="mushafJuz">الجزء الأول</span>
+            <strong id="mushafSurah">الفاتحة</strong>
+            <span id="mushafPage">١</span>
+          </div>
+          <div id="quranLoading" class="loading-state"><span class="loader"></span><p>جاري تحميل الصفحة</p></div>
+          <div id="ayahContainer" class="ayah-container hidden"></div>
+          <div id="quranError" class="empty-state hidden">
+            <svg><use href="#i-info"></use></svg><h3>تعذر تحميل الصفحة</h3><p>تحقق من الاتصال ثم أعد المحاولة.</p>
+            <button id="retryQuranButton" class="primary-button" type="button">إعادة المحاولة</button>
+          </div>
+          <div class="mushaf-footer">سكينة · مصحف المدينة</div>
+        </div>
+
+        <div class="quran-navigation">
+          <button id="nextPageButton" class="nav-page-button" type="button"><svg><use href="#i-next"></use></svg><span>الصفحة التالية</span></button>
+          <button id="audioButton" class="audio-main-button" type="button"><svg><use href="#i-play"></use></svg><span>استماع</span></button>
+          <button id="previousPageButton" class="nav-page-button" type="button"><span>الصفحة السابقة</span><svg><use href="#i-prev"></use></svg></button>
+        </div>
+
+        <div class="memorize-card card">
+          <div class="card-title-row"><div><p class="eyebrow teal">التسميع</p><h2>التصحيح كلمة بكلمة</h2></div><span class="status-pill" id="speechStatus">جاهز</span></div>
+          <p>اضغط على آية في الصفحة لتحديدها، ثم ابدأ التسميع. تتم المعالجة داخل المتصفح.</p>
+          <div id="selectedAyahText" class="selected-ayah">حدد آية من الصفحة</div>
+          <button id="memorizeButton" class="primary-button wide" type="button"><svg><use href="#i-mic"></use></svg><span>ابدأ التسميع</span></button>
+          <div id="speechResult" class="speech-result hidden"></div>
+        </div>
+      </section>
+
+      <section id="view-prayers" class="view" data-view-panel="prayers">
+        <div class="page-intro">
+          <div><p class="eyebrow teal">عبادتك في وقتها</p><h1>مواقيت الصلاة</h1></div>
+          <button id="refreshLocationButton" class="icon-button elevated" type="button" aria-label="تحديث الموقع"><svg><use href="#i-location"></use></svg></button>
+        </div>
+        <div class="location-summary card">
+          <div><span>الموقع المعتمد</span><strong id="prayerLocationLabel">بيروت، لبنان</strong><small id="calculationLabel">طريقة رابطة العالم الإسلامي</small></div>
+          <svg><use href="#i-location"></use></svg>
+        </div>
+        <div id="prayerGrid" class="prayer-grid" aria-live="polite"></div>
+
+        <div class="qibla-card card">
+          <div class="card-title-row"><div><p class="eyebrow teal">اتجاه الصلاة</p><h2>القبلة</h2></div><span id="qiblaDegrees" class="status-pill">—°</span></div>
+          <div class="compass-wrap">
+            <div class="compass-ring"><span class="north">ش</span><span class="south">ج</span><span class="east">ق</span><span class="west">غ</span><div id="qiblaNeedle" class="qibla-needle"><span></span></div><div class="kaaba">ٱ</div></div>
+          </div>
+          <p id="qiblaHint" class="center-note">ضع الهاتف على سطح مستوٍ واسمح بالوصول إلى اتجاه الجهاز.</p>
+          <button id="enableCompassButton" class="soft-button wide" type="button"><svg><use href="#i-compass"></use></svg><span>تفعيل بوصلة الهاتف</span></button>
+        </div>
+      </section>
+
+      <section id="view-adhkar" class="view" data-view-panel="adhkar">
+        <div class="page-intro"><div><p class="eyebrow teal">حصنك اليومي</p><h1>الأذكار</h1></div><span id="adhkarProgress" class="progress-badge">٠٪</span></div>
+        <div class="segmented" role="tablist" aria-label="نوع الأذكار">
+          <button class="active" data-dhikr-tab="morning" role="tab" type="button">الصباح</button>
+          <button data-dhikr-tab="evening" role="tab" type="button">المساء</button>
+          <button data-dhikr-tab="sleep" role="tab" type="button">النوم</button>
+        </div>
+        <div id="adhkarList" class="adhkar-list"></div>
+        <button id="resetAdhkarButton" class="soft-button wide" type="button"><svg><use href="#i-refresh"></use></svg><span>إعادة العدادات</span></button>
+      </section>
+
+      <section id="view-tools" class="view" data-view-panel="tools">
+        <div class="page-intro"><div><p class="eyebrow teal">كل ما تحتاجه</p><h1>الأدوات</h1></div></div>
+        <div class="tools-grid">
+          <button class="tool-card" data-tool="alarm" type="button"><span class="tool-icon coral"><svg><use href="#i-bell"></use></svg></span><span><strong>منبّه الفجر</strong><small id="alarmStatusMini">غير مفعّل</small></span></button>
+          <button class="tool-card" data-tool="tasbih" type="button"><span class="tool-icon aqua"><svg><use href="#i-refresh"></use></svg></span><span><strong>المسبحة</strong><small>عداد محفوظ تلقائياً</small></span></button>
+          <button class="tool-card" data-tool="zakat" type="button"><span class="tool-icon sand"><svg><use href="#i-calc"></use></svg></span><span><strong>حاسبة الزكاة</strong><small>حساب تقريبي للأموال</small></span></button>
+          <button class="tool-card" data-tool="assistant" type="button"><span class="tool-icon mint"><svg><use href="#i-spark"></use></svg></span><span><strong>المساعد القرآني</strong><small>إرشاد من مصادر محفوظة</small></span></button>
+        </div>
+
+        <section id="tool-alarm" class="tool-panel card">
+          <div class="card-title-row"><div><p class="eyebrow teal">استيقاظ فعلي</p><h2>منبّه الفجر الذكي</h2></div><label class="switch"><input id="alarmEnabled" type="checkbox"><span></span></label></div>
+          <p>يرنّ ويهتزّ بصورة متكررة، ولا يتوقف إلا بعد حل المسألة الظاهرة.</p>
+          <div class="form-grid two">
+            <label class="field"><span>قبل الفجر</span><select id="alarmOffset"><option value="0">في وقت الفجر</option><option value="5">قبل ٥ دقائق</option><option value="10">قبل ١٠ دقائق</option><option value="15">قبل ١٥ دقيقة</option></select></label>
+            <label class="field"><span>مستوى المسألة</span><select id="alarmDifficulty"><option value="easy">سهل</option><option value="medium">متوسط</option><option value="hard">صعب</option></select></label>
+          </div>
+          <div class="notice"><svg><use href="#i-info"></use></svg><p>على الويب يعمل المنبّه ما دام التطبيق مفتوحاً. إغلاق المتصفح يمنع التشغيل المضمون، خصوصاً على iPhone.</p></div>
+          <button id="testAlarmButton" class="soft-button wide" type="button"><svg><use href="#i-bell"></use></svg><span>اختبار المنبّه</span></button>
+        </section>
+
+        <section id="tool-tasbih" class="tool-panel card hidden">
+          <div class="card-title-row"><div><p class="eyebrow teal">ذكر مستمر</p><h2>المسبحة الإلكترونية</h2></div><button id="resetTasbihButton" class="icon-button" type="button" aria-label="تصفير"><svg><use href="#i-refresh"></use></svg></button></div>
+          <div class="tasbih-wrap">
+            <select id="tasbihPhrase" class="phrase-select"><option>سبحان الله</option><option>الحمد لله</option><option>الله أكبر</option><option>لا إله إلا الله</option><option>أستغفر الله</option><option>اللهم صل على محمد</option></select>
+            <button id="tasbihButton" class="tasbih-button" type="button"><span id="tasbihCount">٠</span><small>اضغط للتسبيح</small></button>
+            <div class="target-row"><span>الهدف</span><button data-target="33" type="button">٣٣</button><button data-target="100" type="button">١٠٠</button><strong id="tasbihTargetState">٠ / ٣٣</strong></div>
+          </div>
+        </section>
+
+        <section id="tool-zakat" class="tool-panel card hidden">
+          <div class="card-title-row"><div><p class="eyebrow teal">تقدير أولي</p><h2>حاسبة زكاة المال</h2></div><span class="status-pill">٢٫٥٪</span></div>
+          <div class="form-grid two">
+            <label class="field"><span>النقد والمدخرات</span><input id="zakatCash" type="number" min="0" step="any" placeholder="0"></label>
+            <label class="field"><span>الذهب والفضة</span><input id="zakatMetals" type="number" min="0" step="any" placeholder="0"></label>
+            <label class="field"><span>البضائع التجارية</span><input id="zakatTrade" type="number" min="0" step="any" placeholder="0"></label>
+            <label class="field"><span>الديون المستحقة عليك</span><input id="zakatDebt" type="number" min="0" step="any" placeholder="0"></label>
+            <label class="field full"><span>قيمة النصاب بعملتك</span><input id="zakatNisab" type="number" min="0" step="any" placeholder="أدخل القيمة الحالية لنصاب ٨٥ غرام ذهب"></label>
+          </div>
+          <button id="calculateZakatButton" class="primary-button wide" type="button">احسب الزكاة</button>
+          <div id="zakatResult" class="result-box hidden"></div>
+          <p class="fine-print">الحاسبة للتقدير العام وليست فتوى. مسائل الديون والتجارة تحتاج مراجعة جهة شرعية موثوقة.</p>
+        </section>
+
+        <section id="tool-assistant" class="tool-panel card hidden">
+          <div class="card-title-row"><div><p class="eyebrow teal">دليل موضوعي</p><h2>المساعد القرآني</h2></div><span class="status-pill">محلي</span></div>
+          <p>اكتب موضوعاً مثل الصبر، التوبة، القلق، الرزق أو بر الوالدين. يعرض المساعد آيات وأذكاراً محفوظة من دون إرسال سؤالك إلى خادم.</p>
+          <div class="assistant-input-row"><input id="assistantInput" type="search" placeholder="اكتب الموضوع هنا"><button id="assistantButton" class="primary-button" type="button"><svg><use href="#i-spark"></use></svg><span>بحث</span></button></div>
+          <div class="topic-chips"><button type="button">الصبر</button><button type="button">القلق</button><button type="button">التوبة</button><button type="button">الرزق</button></div>
+          <div id="assistantResult" class="assistant-result"><p>المحتوى إرشادي ولا يحل محل سؤال أهل العلم في الأحكام والفتاوى.</p></div>
+        </section>
+
+        <article class="privacy-card"><svg><use href="#i-check"></use></svg><div><strong>خصوصية افتراضية</strong><p>العدادات والإعدادات والصفحة المحفوظة تبقى داخل جهازك ولا تتطلب حساباً.</p></div></article>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+      <button class="active" data-view="home" type="button"><svg><use href="#i-home"></use></svg><span>الرئيسية</span></button>
+      <button data-view="quran" type="button"><svg><use href="#i-book"></use></svg><span>المصحف</span></button>
+      <button data-view="prayers" type="button"><svg><use href="#i-clock"></use></svg><span>الصلاة</span></button>
+      <button data-view="adhkar" type="button"><svg><use href="#i-spark"></use></svg><span>الأذكار</span></button>
+      <button data-view="tools" type="button"><svg><use href="#i-grid"></use></svg><span>الأدوات</span></button>
+    </nav>
+  </div>
+
+  <div id="alarmOverlay" class="alarm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="alarmTitle">
+    <div class="alarm-dialog">
+      <span class="alarm-pulse"><svg><use href="#i-bell"></use></svg></span>
+      <p class="eyebrow">حان وقت الفجر</p>
+      <h2 id="alarmTitle">الصلاة خير من النوم</h2>
+      <p>حل المسألة لإيقاف المنبّه</p>
+      <div id="alarmQuestion" class="alarm-question">—</div>
+      <form id="alarmForm"><input id="alarmAnswer" type="number" inputmode="numeric" autocomplete="off" placeholder="الإجابة"><button class="primary-button wide" type="submit">تحقق وأوقف المنبّه</button></form>
+      <p id="alarmError" class="form-error"></p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
