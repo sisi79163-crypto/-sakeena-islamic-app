@@ -18,7 +18,6 @@ export const FinalScene: React.FC = () => {
         trimBefore={S.trimBefore}
         playbackRate={S.playbackRate}
         durationInFrames={S.duration}
-        motion="none"
         push={[1.0, 1.05]}
         drift={[0, -5]}
         darken={0.52}

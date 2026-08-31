@@ -20,7 +20,6 @@ export const HadithScene: React.FC = () => {
         trimBefore={S.trimBefore}
         playbackRate={S.playbackRate}
         durationInFrames={S.duration}
-        motion="none"
         push={[1.015, 1.045]}
         drift={[0, -6]}
         darken={0.07}
@@ -46,7 +45,7 @@ export const HadithScene: React.FC = () => {
           backgroundColor: 'rgba(4, 16, 29, 0.62)',
           outline: '1px solid rgba(233, 205, 146, 0.28)',
           ...arabic(38, GOLD, 1.3),
-          opacity: interpolate(frame, [236, 262, 372, 386], [0, 1, 1, 0], ramp),
+          opacity: interpolate(frame, [252, 280, 412, 428], [0, 1, 1, 0], ramp),
         }}
       >
         حديث صحيح — رواه مسلم ٢٥٨٩

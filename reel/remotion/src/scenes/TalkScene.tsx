@@ -11,7 +11,6 @@ export const TalkScene: React.FC = () => (
       trimBefore={S.trimBefore}
       playbackRate={S.playbackRate}
       durationInFrames={S.duration}
-      motion="talk"
       push={[1.025, 1.075]}
       drift={[8, -10]}
       darken={0.02}

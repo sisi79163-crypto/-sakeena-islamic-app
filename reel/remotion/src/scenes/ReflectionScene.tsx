@@ -11,7 +11,6 @@ export const ReflectionScene: React.FC = () => (
       trimBefore={S.trimBefore}
       playbackRate={S.playbackRate}
       durationInFrames={S.duration}
-      motion="reflection"
       push={[1.02, 1.07]}
       drift={[-9, -8]}
       darken={0.04}

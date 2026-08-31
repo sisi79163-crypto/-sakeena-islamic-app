@@ -4,9 +4,9 @@
 set -euo pipefail
 
 BRANCH="${BRANCH:-claude/alnameema-video-polish-g3jp7m}"
-RAW="https://raw.githubusercontent.com/sisi79163-crypto/-sakeena-islamic-app/${BRANCH}"
+API="https://api.github.com/repos/sisi79163-crypto/-sakeena-islamic-app/contents"
+fetch() { curl -fsSL -H "Accept: application/vnd.github.raw" -o "$2" "$API/$1?ref=$BRANCH"; }
 ROOT="${ROOT:-$HOME/reel-build}"
-VOICE_SRC="${VOICE_SRC:-$HOME/namima-remotion/public}"
 
 mkdir -p "$ROOT"/{public,out}
 cd "$ROOT"
@@ -18,43 +18,66 @@ for f in package.json tsconfig.json src/index.ts src/Root.tsx src/Shared.tsx \
          src/scenes/ReflectionScene.tsx src/scenes/TongueScene.tsx \
          src/scenes/FinalScene.tsx src/scenes/EndScene.tsx; do
   mkdir -p "$(dirname "$f")"
-  curl -fsSL -o "$f" "$RAW/reel/remotion/$f"
+  fetch "reel/remotion/$f" "$f"
 done
-for f in make_sfx.py make_grain.py; do
-  curl -fsSL -o "$f" "$RAW/reel/scripts/$f"
+for f in make_sfx.py make_grain.py make_masks.py grade.sh; do
+  fetch "reel/scripts/$f" "$f"
 done
+chmod +x grade.sh
 
 echo "==> source clip"
-[ -f source.mp4 ] || curl -fsSL -o source.mp4 "$RAW/reel/source/nameema_source.mp4"
+[ -f source.mp4 ] || curl -fsSL -o source.mp4 \
+  "https://raw.githubusercontent.com/sisi79163-crypto/-sakeena-islamic-app/${BRANCH}/reel/source/nameema_source.mp4"
 
-echo "==> grade  (one pass, so every scene shares the same look)"
-# 1512x2690 -> 1080x1920: the aspect differs by 0.09%, so no crop is needed.
-ffmpeg -hide_banner -loglevel error -y -i source.mp4 \
-  -vf "scale=1080:1920:flags=lanczos,\
-eq=contrast=1.07:saturation=1.05:brightness=0.004:gamma=0.99,\
-unsharp=5:5:0.42:5:5:0.0" \
-  -an -c:v libx264 -crf 14 -preset slow -pix_fmt yuv420p public/graded.mp4
-
-echo "==> typeface"
-if ! curl -fsSL -o public/arabic-bold.ttf \
-  "https://github.com/google/fonts/raw/main/ofl/almarai/Almarai-ExtraBold.ttf"; then
-  cp "$VOICE_SRC/arabic-bold.ttf" public/arabic-bold.ttf
-fi
-
-echo "==> grain + sound design"
+echo "==> masks, grain, sound design"
+python3 make_masks.py public
 python3 make_grain.py public/grain.png
 python3 make_sfx.py public
 
+echo "==> grade + character motion (one pass)"
+./grade.sh source.mp4 public/graded.mp4 public
+
+echo "==> typeface"
+curl -fsSL -o public/arabic-bold.ttf \
+  "https://github.com/google/fonts/raw/main/ofl/almarai/Almarai-ExtraBold.ttf"
+python3 -c "
+import sys
+head = open('public/arabic-bold.ttf','rb').read(4)
+sys.exit(0 if head in (b'\\x00\\x01\\x00\\x00', b'true', b'OTTO') else 'typeface download is not a font')
+"
+
 echo "==> narration"
-for v in 01 02 03 05 06 09 10 12 13 14 15; do
-  cp "$VOICE_SRC/voice$v.mp3" "public/voice$v.mp3"
+# Generated with Higgsfield text-to-speech, preset voice "Arthur" (male, MSA).
+# These are permanent result URLs for those generations - no voice is cloned
+# from any real person.
+CDN="https://d8j0ntlcm91z4.cloudfront.net/user_3G3TMtoB7h4QQk9ems7Ku5DJPMe"
+declare -A VOICES=(
+  [voice01]="hf_20260830_235255_27261a4d-54ff-4d10-a8cb-cd7a319417fc"
+  [voice02]="hf_20260830_235255_07618e42-7b5d-4ba3-ba3e-d4c60b6856bf"
+  [voice03]="hf_20260830_235255_ee94b80e-9af4-4eb1-b091-0ec39646820c"
+  [voice05]="hf_20260830_235255_98894cc6-ac99-43e3-9bc1-d335f315b3a3"
+  [voice06]="hf_20260830_235255_199bfe11-f175-40a4-bbdf-361160046496"
+  [voice09]="hf_20260830_235314_86ae366a-968b-4995-a9c7-784ad592eb61"
+  [voice10]="hf_20260830_235525_e43b37a2-577d-4811-8aa8-9d2a731776d4"
+  [voice12]="hf_20260830_235525_cea097fc-ace4-4f66-a752-e7490e67801c"
+  [voice13]="hf_20260830_235525_7bfc4c99-a3bf-48d5-96cd-30db8d640f1e"
+  [voice14]="hf_20260830_235525_248c8714-8c2e-4fcf-bd81-d59ac5925035"
+  [voice15]="hf_20260830_235642_4fe0d536-d60b-431d-bbc0-c67b5f570ec9"
+)
+for v in "${!VOICES[@]}"; do
+  [ -f "raw_$v.mp3" ] || curl -fsSL -o "raw_$v.mp3" "$CDN/${VOICES[$v]}.mp3"
 done
-# Level the narration: high-pass off the rumble, even out the takes, leave headroom.
-for f in public/voice*.mp3; do
-  ffmpeg -hide_banner -loglevel error -y -i "$f" \
-    -af "highpass=f=85,dynaudnorm=f=180:g=9:p=0.62:m=6,alimiter=limit=0.89" \
-    -c:a libmp3lame -q:a 1 "${f%.mp3}.lvl.mp3"
-  mv "${f%.mp3}.lvl.mp3" "$f"
+
+# The three lines that carry the hadith are slowed a touch so the Prophet's
+# words are delivered more calmly than the rest of the narration.
+slow_for() { case "$1" in voice05|voice10|voice15) echo "atempo=0.94," ;; *) echo "" ;; esac; }
+for v in "${!VOICES[@]}"; do
+  ffmpeg -hide_banner -loglevel error -y -i "raw_$v.mp3" \
+    -af "$(slow_for "$v")highpass=f=85,dynaudnorm=f=180:g=9:p=0.62:m=6,alimiter=limit=0.89" \
+    -c:a libmp3lame -q:a 1 "public/$v.mp3"
+done
+for v in "${!VOICES[@]}"; do
+  printf "%s %ss\n" "$v" "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "public/$v.mp3")"
 done
 
 echo "==> install"
@@ -66,7 +89,7 @@ npx remotion render src/index.ts NameemaFinal out/render.mp4 \
   --codec=h264 --crf=15 --pixel-format=yuv420p \
   --audio-codec=aac --audio-bitrate=320k \
   --browser-executable=/opt/chrome-full/chrome \
-  --concurrency=2 --log=error
+  --concurrency=5 --log=error
 
 echo "==> master audio (broadcast-style loudness, hard ceiling, no clipping)"
 ffmpeg -hide_banner -loglevel error -y -i out/render.mp4 \

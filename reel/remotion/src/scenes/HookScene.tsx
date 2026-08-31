@@ -19,7 +19,6 @@ export const HookScene: React.FC = () => {
         trimBefore={S.trimBefore}
         playbackRate={S.playbackRate}
         durationInFrames={S.duration}
-        motion="gossip"
         push={[1.10, 1.035]}
         drift={[6, 10]}
         darken={0.04}

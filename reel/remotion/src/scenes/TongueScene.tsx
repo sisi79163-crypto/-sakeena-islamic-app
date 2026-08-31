@@ -16,7 +16,6 @@ export const TongueScene: React.FC = () => {
         trimBefore={S.trimBefore}
         playbackRate={S.playbackRate}
         durationInFrames={S.duration}
-        motion="none"
         push={[1.04, 1.0]}
         drift={[0, 0]}
         darken={0.30}
