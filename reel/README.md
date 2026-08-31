@@ -84,6 +84,16 @@ Loudness is normalised to −14 LUFS with a −1.5 dBTP ceiling and a limiter, s
 the mix is at platform level with no clipping. Text sits inside a 330 px bottom
 and 96 px side safe area.
 
+## Output
+
+Rendered file:
+<https://d2ol7oe51mr4n9.cloudfront.net/user_3G3TMtoB7h4QQk9ems7Ku5DJPMe/a3600f7e-5801-4de6-b6ec-3d9df68c4049.mp4>
+
+Measured on that file: 1080×1920, 30 fps, 45.376 s, H.264 at 10.36 Mbps,
+AAC 320 kbps 48 kHz stereo, −14.0 LUFS integrated, −1.5 dBTP true peak,
+LRA 3.8 LU, no silence gap longer than 1 s, and no audio stream at all on the
+graded plate — the source's percussion track never reaches the mix.
+
 ## Building
 
 Needs ffmpeg, node and Chromium. In the Higgsfield sandbox:
