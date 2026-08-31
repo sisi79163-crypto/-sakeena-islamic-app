@@ -1,0 +1,20 @@
+{
+  "name": "nameema-reel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "render": "remotion render src/index.ts NameemaFinal out/nameema-final.mp4 --codec=h264 --crf=15 --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=320k --concurrency=2"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.518",
+    "@remotion/media": "4.0.518",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.518"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/react": "19.0.6",
+    "typescript": "5.7.2"
+  }
+}
