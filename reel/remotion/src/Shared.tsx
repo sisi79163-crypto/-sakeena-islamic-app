@@ -22,13 +22,29 @@ export const softFade = (
   frame: number,
   duration: number,
   {inFrames = 12, outFrames = 12}: {inFrames?: number; outFrames?: number} = {},
-) =>
-  interpolate(
-    frame,
-    [0, inFrames, duration - outFrames, duration - 1],
-    [inFrames === 0 ? 1 : 0, 1, 1, outFrames === 0 ? 1 : 0],
-    {easing: EASE, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
-  );
+) => {
+  const at: number[] = [];
+  const to: number[] = [];
+  if (inFrames > 0) {
+    at.push(0, inFrames);
+    to.push(0, 1);
+  } else {
+    at.push(0);
+    to.push(1);
+  }
+  if (outFrames > 0) {
+    at.push(duration - outFrames, duration - 1);
+    to.push(1, 0);
+  } else {
+    at.push(duration - 1);
+    to.push(1);
+  }
+  return interpolate(frame, at, to, {
+    easing: EASE,
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+};
 
 /**
  * One layer of the source clip, masked to a body region and nudged by a couple
