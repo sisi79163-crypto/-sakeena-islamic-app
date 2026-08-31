@@ -30,7 +30,7 @@ export const FinalScene: React.FC = () => {
           <Rule />
           <div
             style={{
-              ...arabic(66, CREAM, 1.52),
+              ...arabic(62, CREAM, 1.52),
               opacity: interpolate(frame, [16, 38, 188, 214], [0, 1, 1, 0.3], ramp),
             }}
           >
@@ -39,7 +39,7 @@ export const FinalScene: React.FC = () => {
           </div>
           <div
             style={{
-              ...arabic(80, '#ff6069', 1.42),
+              ...arabic(72, '#ff6069', 1.42),
               marginTop: 26,
               opacity: interpolate(frame, [190, 218], [0, 1], ramp),
               scale: interpolate(frame, [190, 228], [0.955, 1], ramp),
