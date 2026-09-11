@@ -1,7 +1,7 @@
 "use strict";
 
-const CACHE_VERSION = "sakeena-static-v1";
-const RUNTIME_CACHE = "sakeena-runtime-v1";
+const CACHE_VERSION = "sakeena-static-v2";
+const RUNTIME_CACHE = "sakeena-runtime-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -59,15 +59,28 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  event.respondWith(
-    caches.match(request).then(cached => cached || fetch(request).then(response => {
-      if (response.ok && url.origin === self.location.origin) {
-        const clone = response.clone();
-        caches.open(RUNTIME_CACHE).then(cache => cache.put(request, clone));
-      }
-      return response;
-    }))
-  );
+  if (url.origin === self.location.origin) {
+    // Stale-while-revalidate: answer instantly from cache, but always refresh in the
+    // background so a new deployment reaches the user on the next visit.
+    event.respondWith(
+      caches.open(RUNTIME_CACHE).then(async cache => {
+        const cached = (await cache.match(request)) || (await caches.match(request));
+        const network = fetch(request)
+          .then(response => {
+            if (response.ok) cache.put(request, response.clone());
+            return response;
+          })
+          .catch(error => {
+            if (cached) return cached;
+            throw error;
+          });
+        return cached || network;
+      })
+    );
+    return;
+  }
+
+  event.respondWith(caches.match(request).then(cached => cached || fetch(request)));
 });
 
 self.addEventListener("notificationclick", event => {

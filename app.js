@@ -136,6 +136,7 @@ const state = {
   alarmAnswer: null,
   audioContext: null,
   deferredInstallPrompt: null,
+  compassEnabled: false,
   qiblaBearing: null,
   deviceHeading: null,
   toastTimer: null
@@ -339,6 +340,10 @@ function determineNextPrayer(now = new Date()) {
 }
 
 function renderPrayerTimes() {
+  if (!state.prayerTimes) {
+    renderPrayerError();
+    return;
+  }
   const next = determineNextPrayer();
   $("#prayerGrid").innerHTML = PRAYER_ORDER.map(key => {
     const active = next?.key === key;
@@ -349,6 +354,8 @@ function renderPrayerTimes() {
 
 function updateNextPrayer() {
   clearInterval(state.countdownTimer);
+  state.countdownTimer = null;
+  if (!state.prayerTimes) return;
   const tick = () => {
     if (!state.prayerTimes) return;
     const now = new Date();
@@ -407,8 +414,11 @@ async function enableCompass() {
       const permission = await DeviceOrientationEvent.requestPermission();
       if (permission !== "granted") throw new Error("denied");
     }
-    window.addEventListener("deviceorientationabsolute", orientationHandler, true);
-    window.addEventListener("deviceorientation", orientationHandler, true);
+    if (!state.compassEnabled) {
+      window.addEventListener("deviceorientationabsolute", orientationHandler, true);
+      window.addEventListener("deviceorientation", orientationHandler, true);
+      state.compassEnabled = true;
+    }
     $("#enableCompassButton span").textContent = "البوصلة مفعّلة";
     toast("تم تفعيل بوصلة الهاتف");
   } catch {
@@ -574,7 +584,8 @@ function stopAudio() {
   state.isAudioPlaying = false;
   if (state.audio) {
     state.audio.pause();
-    state.audio.src = "";
+    state.audio.removeAttribute("src");
+    state.audio.load();
   }
   state.audio = null;
   state.audioIndex = -1;
@@ -808,8 +819,13 @@ function scheduleFajrAlarm() {
 async function primeAudioContext() {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   if (!AudioContext) return;
-  state.audioContext ||= new AudioContext();
-  if (state.audioContext.state === "suspended") await state.audioContext.resume();
+  try {
+    state.audioContext ||= new AudioContext();
+    if (state.audioContext.state === "suspended") await state.audioContext.resume();
+  } catch (error) {
+    // Autoplay policies may block the tone; the visual alarm must still run.
+    console.error("Audio context unavailable", error);
+  }
 }
 
 function makeAlarmQuestion() {
