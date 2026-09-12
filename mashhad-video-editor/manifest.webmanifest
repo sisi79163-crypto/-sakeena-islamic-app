@@ -1,0 +1,21 @@
+{
+  "name": "مَشهد — محرّر فيديو",
+  "short_name": "مَشهد",
+  "description": "محرّر فيديو عربي يعمل بالكامل داخل المتصفح: قصّ ودمج المقاطع، نصوص، فلاتر، وتصدير.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0e1116",
+  "theme_color": "#0e1116",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مَشهد — محرّر فيديو</title>
+<meta name="description" content="محرّر فيديو عربي يعمل بالكامل داخل المتصفح: قصّ ودمج المقاطع، نصوص، فلاتر، وتصدير — بلا خادم وبلا رفع ملفات.">
+<meta name="theme-color" content="#0e1116">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e1116'/%3E%3Cpath d='M24 19l22 13-22 13z' fill='%234ade80'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14"/><path d="M24 19l22 13-22 13z"/></svg>
+    <span>مَشهد</span>
+  </div>
+
+  <input id="projectName" class="project-name" value="مشروع بلا عنوان" aria-label="اسم المشروع" spellcheck="false">
+
+  <div class="ratios" role="group" aria-label="أبعاد المشروع">
+    <button type="button" data-ratio="16:9" class="is-active">16:9</button>
+    <button type="button" data-ratio="9:16">9:16</button>
+    <button type="button" data-ratio="1:1">1:1</button>
+    <button type="button" data-ratio="4:5">4:5</button>
+  </div>
+
+  <div class="topbar-actions">
+    <button type="button" id="btnSave" class="btn ghost">حفظ المشروع</button>
+    <button type="button" id="btnExport" class="btn primary">تصدير الفيديو</button>
+  </div>
+</header>
+
+<main class="workspace">
+
+  <aside class="panel bin" aria-label="مكتبة الوسائط">
+    <div class="panel-head">
+      <h2>الوسائط</h2>
+      <button type="button" id="btnImport" class="btn small">استيراد</button>
+    </div>
+    <input type="file" id="fileInput" multiple accept="video/*,image/*,audio/*" hidden>
+    <div id="dropZone" class="dropzone">
+      <p>أفلِت الملفات هنا</p>
+      <small>فيديو · صور · صوت</small>
+    </div>
+    <ul id="binList" class="bin-list"></ul>
+  </aside>
+
+  <section class="stage">
+    <div class="canvas-wrap">
+      <canvas id="preview" width="1920" height="1080"></canvas>
+    </div>
+
+    <div class="transport">
+      <button type="button" id="btnStart" class="icon-btn" title="إلى البداية" aria-label="إلى البداية">⏮</button>
+      <button type="button" id="btnPlay" class="icon-btn play" title="تشغيل (مسافة)" aria-label="تشغيل">▶</button>
+      <span class="timecode"><span id="tcNow">00:00.0</span> / <span id="tcTotal">00:00.0</span></span>
+
+      <span class="sep" aria-hidden="true"></span>
+
+      <button type="button" id="btnSplit" class="icon-btn" title="قصّ عند المؤشر (S)" aria-label="قصّ">✂</button>
+      <button type="button" id="btnText" class="icon-btn" title="إضافة نص (T)" aria-label="إضافة نص">T</button>
+      <button type="button" id="btnDelete" class="icon-btn danger" title="حذف المحدد (Delete)" aria-label="حذف">🗑</button>
+
+      <span class="spacer"></span>
+
+      <label class="zoom">
+        تكبير
+        <input type="range" id="zoom" min="16" max="220" step="2" value="70">
+      </label>
+    </div>
+  </section>
+
+  <aside class="panel inspector" aria-label="الخصائص">
+    <div class="panel-head"><h2>الخصائص</h2></div>
+    <div id="inspector" class="inspector-body">
+      <p class="empty">اختر مقطعاً أو نصاً من الشريط الزمني لتعديل خصائصه.</p>
+    </div>
+  </aside>
+
+</main>
+
+<section class="timeline-wrap" aria-label="الشريط الزمني">
+  <div class="timeline-scroll" id="timelineScroll">
+    <div class="timeline" id="timeline">
+      <div class="ruler" id="ruler"></div>
+      <div class="track" id="trackVideo" data-label="مرئي"></div>
+      <div class="track track-text" id="trackText" data-label="نص"></div>
+      <div class="track track-audio" id="trackAudio" data-label="موسيقى"></div>
+      <div class="playhead" id="playhead"><i></i></div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog id="exportDialog" class="dialog">
+  <form method="dialog" class="dialog-body">
+    <h2>تصدير الفيديو</h2>
+
+    <div id="exportSetup">
+      <label class="field">
+        <span>الجودة</span>
+        <select id="exportQuality">
+          <option value="0.5">نصف الدقة — أسرع</option>
+          <option value="1" selected>الدقة الكاملة</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>معدل البِت</span>
+        <select id="exportBitrate">
+          <option value="4000000">4 ميغابت/ث — خفيف</option>
+          <option value="8000000" selected>8 ميغابت/ث — متوازن</option>
+          <option value="16000000">16 ميغابت/ث — عالي</option>
+        </select>
+      </label>
+      <p class="note">
+        يجري التصدير بزمن حقيقي: مشروع مدته دقيقة يستغرق دقيقة تقريباً.
+        أبقِ هذا التبويب ظاهراً حتى ينتهي.
+      </p>
+    </div>
+
+    <div id="exportProgress" hidden>
+      <div class="progress"><div id="exportBar"></div></div>
+      <p id="exportStatus" class="note">جارٍ التحضير…</p>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" id="exportCancel" class="btn ghost">إلغاء</button>
+      <button type="button" id="exportStart" class="btn primary">ابدأ التصدير</button>
+    </div>
+  </form>
+</dialog>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
