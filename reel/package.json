@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "prepare-clips": "python3 scripts/prepare.py",
-    "render": "remotion render src/index.jsx Reel output/reel.mp4 --codec=h264 --crf=18 --audio-codec=aac --audio-bitrate=192k"
+    "render": "remotion render src/index.jsx Reel output/reel.mp4 --codec=h264 --crf=23 --audio-codec=aac --audio-bitrate=192k"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.0",
